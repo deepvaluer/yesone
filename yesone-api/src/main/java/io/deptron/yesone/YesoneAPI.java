@@ -27,8 +27,6 @@ public class YesoneAPI {
     }
 
     public static String pdfToXml(byte[] pdfContents, String password) throws Exception {
-        // File file = new File("helloworld.pdf");
-        // byte[] fileContent = Files.readAllBytes(file.toPath());
 
         ExportCustomFile pdf = new ExportCustomFile();
 
