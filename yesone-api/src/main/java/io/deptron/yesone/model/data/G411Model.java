@@ -8,7 +8,7 @@ import io.deptron.yesone.model.data.extension.ICreditSumProvider;
 import io.deptron.yesone.model.data.extension.ISum;
 import io.deptron.yesone.model.data.extension.IUsePlaceCd;
 
-@DataProperty(start = 2022, end = 2022)
-public class G310Model extends DataModel implements IBusnid, IUsePlaceCd, ISum, IAmt, ICreditSumProvider {
+@DataProperty(start = 2023)
+public class G411Model extends DataModel implements IBusnid, IUsePlaceCd, ISum, IAmt, ICreditSumProvider {
 
 }

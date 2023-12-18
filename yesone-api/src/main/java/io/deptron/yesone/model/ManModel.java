@@ -1,7 +1,9 @@
 package io.deptron.yesone.model;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,6 +19,7 @@ import io.deptron.yesone.model.data.C102Model;
 import io.deptron.yesone.model.data.C202Model;
 import io.deptron.yesone.model.data.C301Model;
 import io.deptron.yesone.model.data.C401Model;
+import io.deptron.yesone.model.data.C501Model;
 import io.deptron.yesone.model.data.D101Model;
 import io.deptron.yesone.model.data.E103Model;
 import io.deptron.yesone.model.data.F103Model;
@@ -24,18 +27,26 @@ import io.deptron.yesone.model.data.G109Model;
 import io.deptron.yesone.model.data.G109SumModel;
 import io.deptron.yesone.model.data.G110Model;
 import io.deptron.yesone.model.data.G110SumModel;
+import io.deptron.yesone.model.data.G111Model;
+import io.deptron.yesone.model.data.G111SumModel;
 import io.deptron.yesone.model.data.G209Model;
 import io.deptron.yesone.model.data.G209SumModel;
 import io.deptron.yesone.model.data.G210Model;
 import io.deptron.yesone.model.data.G210SumModel;
+import io.deptron.yesone.model.data.G211Model;
+import io.deptron.yesone.model.data.G211SumModel;
 import io.deptron.yesone.model.data.G309Model;
 import io.deptron.yesone.model.data.G309SumModel;
 import io.deptron.yesone.model.data.G310Model;
 import io.deptron.yesone.model.data.G310SumModel;
+import io.deptron.yesone.model.data.G311Model;
+import io.deptron.yesone.model.data.G311SumModel;
 import io.deptron.yesone.model.data.G409Model;
 import io.deptron.yesone.model.data.G409SumModel;
 import io.deptron.yesone.model.data.G410Model;
 import io.deptron.yesone.model.data.G410SumModel;
+import io.deptron.yesone.model.data.G411Model;
+import io.deptron.yesone.model.data.G411SumModel;
 import io.deptron.yesone.model.data.J101Model;
 import io.deptron.yesone.model.data.J203Model;
 import io.deptron.yesone.model.data.J301Model;
@@ -49,6 +60,7 @@ import io.deptron.yesone.model.data.Q101Model;
 import io.deptron.yesone.model.data.Q201Model;
 import io.deptron.yesone.model.data.Q301Model;
 import io.deptron.yesone.model.data.R101Model;
+import io.deptron.yesone.model.data.S101Model;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ManModel {
@@ -119,115 +131,95 @@ public class ManModel {
 
     void afterUnmarshal(Unmarshaller unmarshaller, Object parent) {
         this.datas = Arrays.stream(this.xmlDatas)
-                .map(node -> mapToData(node))
+                .map(node -> nodeToData(node))
                 .filter(data -> null != data)
                 .toArray(DataModel[]::new);
-        this.sumData = mapToSumData(this.xmlSumData);
+        this.sumData = nodeToSumData(this.xmlSumData);
     }
 
-    private DataModel mapToData(NodeModel node) {
-        if (null == node)
-            return null;
-        String formCd = this.getFormModel().getFormCd();
-        int year = this.getFormModel().getYear();
-        DataModel res;
-        if (formCd.startsWith("A102"))
-            res = node.toDataModel(A102Model.class, this, year);
-        else if (formCd.startsWith("B101"))
-            res = node.toDataModel(B101Model.class, this, year);
-        else if (formCd.startsWith("B201"))
-            res = node.toDataModel(B201Model.class, this, year);
-        else if (formCd.startsWith("C102"))
-            res = node.toDataModel(C102Model.class, this, year);
-        else if (formCd.startsWith("C202"))
-            res = node.toDataModel(C202Model.class, this, year);
-        else if (formCd.startsWith("C301"))
-            res = node.toDataModel(C301Model.class, this, year);
-        else if (formCd.startsWith("C401"))
-            res = node.toDataModel(C401Model.class, this, year);
-        else if (formCd.startsWith("D101"))
-            res = node.toDataModel(D101Model.class, this, year);
-        else if (formCd.startsWith("E103"))
-            res = node.toDataModel(E103Model.class, this, year);
-        else if (formCd.startsWith("F103"))
-            res = node.toDataModel(F103Model.class, this, year);
-        else if (formCd.startsWith("G109"))
-            res = node.toDataModel(G109Model.class, this, year);
-        else if (formCd.startsWith("G209"))
-            res = node.toDataModel(G209Model.class, this, year);
-        else if (formCd.startsWith("G309"))
-            res = node.toDataModel(G309Model.class, this, year);
-        else if (formCd.startsWith("G409"))
-            res = node.toDataModel(G409Model.class, this, year);
-        else if (formCd.startsWith("G110"))
-            res = node.toDataModel(G110Model.class, this, year);
-        else if (formCd.startsWith("G210"))
-            res = node.toDataModel(G210Model.class, this, year);
-        else if (formCd.startsWith("G310"))
-            res = node.toDataModel(G310Model.class, this, year);
-        else if (formCd.startsWith("G410"))
-            res = node.toDataModel(G410Model.class, this, year);
-        else if (formCd.startsWith("J101"))
-            res = node.toDataModel(J101Model.class, this, year);
-        else if (formCd.startsWith("J203"))
-            res = node.toDataModel(J203Model.class, this, year);
-        else if (formCd.startsWith("J301"))
-            res = node.toDataModel(J301Model.class, this, year);
-        else if (formCd.startsWith("J501"))
-            res = node.toDataModel(J501Model.class, this, year);
-        else if (formCd.startsWith("K101"))
-            res = node.toDataModel(K101Model.class, this, year);
-        else if (formCd.startsWith("L102"))
-            res = node.toDataModel(L102Model.class, this, year);
-        else if (formCd.startsWith("N101"))
-            res = node.toDataModel(N101Model.class, this, year);
-        else if (formCd.startsWith("N102"))
-            res = node.toDataModel(N101Model.class, this, year);
-        else if (formCd.startsWith("O101"))
-            res = node.toDataModel(O101Model.class, this, year);
-        else if (formCd.startsWith("P102"))
-            res = node.toDataModel(P102Model.class, this, year);
-        else if (formCd.startsWith("Q101"))
-            res = node.toDataModel(Q101Model.class, this, year);
-        else if (formCd.startsWith("Q201"))
-            res = node.toDataModel(Q201Model.class, this, year);
-        else if (formCd.startsWith("Q301"))
-            res = node.toDataModel(Q301Model.class, this, year);
-        else if (formCd.startsWith("R101"))
-            res = node.toDataModel(R101Model.class, this, year);
-        else
-            return null;
-
-        return res;
-    }
-
-    private DataModel mapToSumData(NodeModel node) {
-        if (null == node)
-            return null;
+    private DataModel nodeToData(NodeModel node, Map<String, Class<? extends DataModel>> classMap) {
 
         String formCd = this.getFormModel().getFormCd();
         int year = this.getFormModel().getYear();
-        DataModel res;
-        if (formCd.startsWith("G109"))
-            res = node.toDataModel(G109SumModel.class, this, year);
-        else if (formCd.startsWith("G209"))
-            res = node.toDataModel(G209SumModel.class, this, year);
-        else if (formCd.startsWith("G309"))
-            res = node.toDataModel(G309SumModel.class, this, year);
-        else if (formCd.startsWith("G409"))
-            res = node.toDataModel(G409SumModel.class, this, year);
-        else if (formCd.startsWith("G110"))
-            res = node.toDataModel(G110SumModel.class, this, year);
-        else if (formCd.startsWith("G210"))
-            res = node.toDataModel(G210SumModel.class, this, year);
-        else if (formCd.startsWith("G310"))
-            res = node.toDataModel(G310SumModel.class, this, year);
-        else if (formCd.startsWith("G410"))
-            res = node.toDataModel(G410SumModel.class, this, year);
-        else
+
+        String key = formCd.substring(0, 4);
+
+        Class<? extends DataModel> dataModelClass = classMap.get(key);
+        if (dataModelClass != null) {
+            return node.toDataModel(dataModelClass, this, year);
+        } else {
+            return null;
+        }
+    }
+
+    private DataModel nodeToData(NodeModel node) {
+        if (null == node)
             return null;
 
-        return res;
+        Map<String, Class<? extends DataModel>> classMap = new HashMap<>();
+        classMap.put("A102", A102Model.class);
+        classMap.put("B101", B101Model.class);
+        classMap.put("B201", B201Model.class);
+        classMap.put("C102", C102Model.class);
+        classMap.put("C202", C202Model.class);
+        classMap.put("C301", C301Model.class);
+        classMap.put("C401", C401Model.class);
+        classMap.put("C501", C501Model.class);
+        classMap.put("D101", D101Model.class);
+        classMap.put("E103", E103Model.class);
+        classMap.put("F103", F103Model.class);
+        classMap.put("G109", G109Model.class);
+        classMap.put("G209", G209Model.class);
+        classMap.put("G309", G309Model.class);
+        classMap.put("G409", G409Model.class);
+        classMap.put("G110", G110Model.class);
+        classMap.put("G210", G210Model.class);
+        classMap.put("G310", G310Model.class);
+        classMap.put("G410", G410Model.class);
+        classMap.put("G111", G111Model.class);
+        classMap.put("G211", G211Model.class);
+        classMap.put("G311", G311Model.class);
+        classMap.put("G411", G411Model.class);
+        classMap.put("J101", J101Model.class);
+        classMap.put("J203", J203Model.class);
+        classMap.put("J301", J301Model.class);
+        classMap.put("J501", J501Model.class);
+        classMap.put("K101", K101Model.class);
+        classMap.put("L102", L102Model.class);
+        classMap.put("N101", N101Model.class);
+        classMap.put("N102", N101Model.class);
+        classMap.put("O101", O101Model.class);
+        classMap.put("P102", P102Model.class);
+        classMap.put("Q101", Q101Model.class);
+        classMap.put("Q201", Q201Model.class);
+        classMap.put("Q301", Q301Model.class);
+        classMap.put("R101", R101Model.class);
+        classMap.put("S101", S101Model.class);
+
+        return nodeToData(node, classMap);
+    }
+
+    private DataModel nodeToSumData(NodeModel node) {
+        if (null == node)
+            return null;
+
+        Map<String, Class<? extends DataModel>> classMap = new HashMap<>();
+
+        classMap.put("G109", G109SumModel.class);
+        classMap.put("G209", G209SumModel.class);
+        classMap.put("G309", G309SumModel.class);
+        classMap.put("G409", G409SumModel.class);
+        classMap.put("G110", G110SumModel.class);
+        classMap.put("G210", G210SumModel.class);
+        classMap.put("G310", G310SumModel.class);
+        classMap.put("G410", G410SumModel.class);
+        classMap.put("G111", G111SumModel.class);
+        classMap.put("G211", G211SumModel.class);
+        classMap.put("G311", G311SumModel.class);
+        classMap.put("G411", G411SumModel.class);
+
+        return nodeToData(node, classMap);
+
     }
 
 }

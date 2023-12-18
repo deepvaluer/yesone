@@ -4,7 +4,7 @@ import io.deptron.yesone.model.DataModel;
 import io.deptron.yesone.model.annotation.DataProperty;
 import io.deptron.yesone.model.data.extension.ICreditSum;
 
-@DataProperty(start = 2022)
+@DataProperty(start = 2022, end = 2022)
 public class G110SumModel extends DataModel implements ICreditSum {
 
 }

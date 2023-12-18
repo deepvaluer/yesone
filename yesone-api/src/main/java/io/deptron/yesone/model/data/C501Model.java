@@ -6,7 +6,8 @@ import io.deptron.yesone.model.data.extension.IAmt;
 import io.deptron.yesone.model.data.extension.IBusnid;
 import io.deptron.yesone.model.data.extension.ISum;
 
-public class C102Model extends DataModel implements IBusnid, ISum, IAmt {
+@DataProperty(start = 2023)
+public class C501Model extends DataModel implements IBusnid, ISum, IAmt {
 
     @DataProperty
     public String getEduTp() {
@@ -15,8 +16,9 @@ public class C102Model extends DataModel implements IBusnid, ISum, IAmt {
     }
 
     @DataProperty
-    public String getEduCl() {
+    public String getEduEnd() {
         DataModel dataModel = (DataModel) this;
-        return dataModel.stringValueOf("eduCl");
+        return dataModel.stringValueOf("eduEnd");
     }
+
 }
